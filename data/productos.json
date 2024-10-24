@@ -1,0 +1,63 @@
+[
+    {
+      "id": 1,
+      "title": "Dog Food",
+      "price": 29.99,
+      "thumbnail": "/images/thumbnails/dog_food.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Cat Toy",
+      "price": 9.99,
+      "thumbnail": "/images/thumbnails/cat_toy.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Bird Cage",
+      "price": 59.99,
+      "thumbnail": "/images/thumbnails/bird_cage.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Fish Tank",
+      "price": 79.99,
+      "thumbnail": "/images/thumbnails/fish_tank.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Hamster Wheel",
+      "price": 14.99,
+      "thumbnail": "/images/thumbnails/hamster_wheel.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Reptile Heat Lamp",
+      "price": 24.99,
+      "thumbnail": "/images/thumbnails/reptile_lamp.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Rabbit Hutch",
+      "price": 89.99,
+      "thumbnail": "/images/thumbnails/rabbit_hutch.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Guinea Pig Bedding",
+      "price": 12.99,
+      "thumbnail": "/images/thumbnails/guinea_bedding.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Ferret Tunnel",
+      "price": 19.99,
+      "thumbnail": "/images/thumbnails/ferret_tunnel.jpg"
+    },
+    {
+      "id": 10,
+      "title": "Turtle Habitat",
+      "price": 34.99,
+      "thumbnail": "/images/thumbnails/turtle_habitat.jpg"
+    }
+  ]
+  
