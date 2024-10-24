@@ -14,7 +14,7 @@ find . \( -path ./node_modules -o -path ./dist -o -path ./.git -o -path ./.vite 
     -o -iname "package.json" -o -iname "vite.config.js" -o -iname "README.md" \
     -o -iname "*.eslintrc" -o -iname "*.eslintignore" -o -iname "babel.config.js" \
     -o -iname "webpack.config.js" -o -iname "tsconfig.json" -o -iname ".eslintcache" \
-    -o -iname "eslint.config.js" \) \
+    -o -iname "eslint.config.js" -o -iname "vercel.json" -o -iname "*.json" \) \
     ! -iname "package-lock.json" | while read -r file
 do
     echo "### File: $file ###" >> $temp_file
