@@ -1,19 +1,21 @@
 // archivo: app.js
 
 const express = require('express');
+const path = require('path');
 const app = express();
+
+// Middleware para manejar JSON
+app.use(express.json());
+
+// archivos estáticos desde public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rutas de productos y carritos
 const productRoutes = require('./routes/products');
 const cartRoutes = require('./routes/carts');
 
-// Middleware para manejar el análisis del cuerpo JSON
-app.use(express.json());
-
-// Montar las rutas de productos y carritos
 app.use('/products', productRoutes);
 app.use('/carts', cartRoutes);
 
-// Iniciar el servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// Para Vercel
+module.exports = app;

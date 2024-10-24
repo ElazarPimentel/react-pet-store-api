@@ -7,6 +7,7 @@
 - **Carritos de Compras**: Los usuarios pueden crear carritos de compras, agregar productos al carrito y actualizar la cantidad de productos en los carritos existentes.
 - **Archivos Estáticos**: La API también sirve imágenes de los productos (thumbnails) alojadas en el directorio público del servidor.
 - **Persistencia de Datos**: Los datos de productos y carritos se almacenan en archivos JSON, simulando una configuración básica de base de datos.
+- **Middleware**: La API utiliza middleware personalizado para el manejo de errores y la validación de datos.
 
 ## Instalación
 1. Cloná este repositorio.
@@ -43,3 +44,11 @@ En Vercel y se puede acceder a través de:
 
 - **Node.js** versión 14 o superior.
 - **Express.js** como framework backend.
+
+## Middleware
+La API utiliza varios middleware para mejorar su funcionalidad y seguridad:
+
+- **Error Handling**: Middleware personalizado para capturar y manejar errores de manera consistente en toda la aplicación.
+- **Data Validation**: Utiliza middleware para validar los datos de entrada en las solicitudes, asegurando que cumplan con los formatos y requisitos esperados.
+- **CORS**: Configuración de Cross-Origin Resource Sharing para permitir solicitudes desde dominios específicos.
+- **JSON Parsing**: Middleware para analizar el cuerpo de las solicitudes JSON entrantes.

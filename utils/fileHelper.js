@@ -7,9 +7,9 @@ const util = require('util');
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
-// Exponential backoff parameters
+// Parámetros de backoff exponencial
 const MAX_RETRIES = 5;
-const BASE_DELAY = 100; // in ms
+const BASE_DELAY = 100; // en ms
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
