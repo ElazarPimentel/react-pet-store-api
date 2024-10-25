@@ -1,3 +1,5 @@
+<!-- file name: public/index.html -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,14 +34,14 @@
 </head>
 <body>
     <h1>Pata-Pata Petstore API</h1>
-    <p><strong>Pata-Pata Petstore API</strong> es una API backend desarrollada en <strong>Node.js</strong> y <strong>Express.js</strong> que gestiona listados de productos y carritos de compras para una tienda de mascotas en línea. Esta API proporciona endpoints para <strong>obtener detalles de productos</strong>, <strong>agregar nuevos productos</strong> y <strong>gestionar carritos de compras</strong>.</p>
+    <p><strong>Pata-Pata Petstore API</strong> es una API backend desarrollada en <strong>Node.js</strong> y <strong>Express.js</strong> que gestiona listados de productos y carritos de compras para una tienda de mascotas online. Esta API proporciona endpoints para <strong>obtener detalles de productos</strong>, <strong>agregar nuevos productos</strong> y <strong>gestionar carritos de compras</strong>.</p>
 
     <h2>Características Principales</h2>
     <ul>
         <li><strong>Productos</strong>: Los usuarios pueden obtener una lista de productos disponibles en la tienda, ver detalles de productos individuales por su ID y agregar nuevos productos al catálogo.</li>
         <li><strong>Carritos de Compras</strong>: Los usuarios pueden crear carritos de compras, agregar productos al carrito y actualizar la cantidad de productos en los carritos existentes.</li>
-        <li><strong>Archivos Estáticos</strong>: La API también sirve las imágenes de los productos (thumbnails) alojadas en el directorio público del servidor.</li>
-        <li><strong>Persistencia de Datos</strong>: Los datos de productos y carritos se almacenan en archivos JSON, simulando una configuración básica de base de datos.</li>
+        <li><strong>Archivos Estáticos</strong>: La API también sirve imágenes de los productos (thumbnails) almacenadas en el directorio público del servidor.</li>
+        <li><strong>Persistencia de Datos</strong>: Los datos de productos y carritos se almacenan en archivos JSON, simulando una base de datos básica.</li>
     </ul>
 
     <h2>Instalación</h2>
@@ -52,19 +54,19 @@ npm start
     <h3>Productos</h3>
     <ul>
         <li><strong>GET /products</strong>: Obtené todos los productos disponibles.</li>
-        <li><strong>GET /products/:id</strong>: Obtené un producto específico por su ID.</li>
+        <li><strong>GET /products/:id</strong>: Consultá un producto específico por su ID.</li>
         <li><strong>POST /products</strong>: Agregá un nuevo producto al catálogo.</li>
     </ul>
 
     <h3>Carritos</h3>
     <ul>
-        <li><strong>GET /carts/:id</strong>: Obtené un carrito por su ID.</li>
+        <li><strong>GET /carts/:id</strong>: Consultá un carrito por su ID.</li>
         <li><strong>POST /carts</strong>: Creá un nuevo carrito.</li>
-        <li><strong>POST /carts/:cid/product/:pid</strong>: Agregá un producto al carrito o actualizá la cantidad del producto existente en el carrito.</li>
+        <li><strong>POST /carts/:cid/product/:pid</strong>: Agregá un producto al carrito o actualizá la cantidad del producto en el carrito.</li>
     </ul>
 
     <h2>Despliegue</h2>
-    <p>Esta API está desplegada en Vercel y se puede acceder a través del siguiente URL:</p>
+    <p>Esta API está desplegada en Vercel y se puede acceder a través del siguiente enlace:</p>
     <p><a href="https://react-pet-store-api.vercel.app">https://react-pet-store-api.vercel.app</a></p>
 
     <h2>Requerimientos</h2>
@@ -74,6 +76,6 @@ npm start
     </ul>
 
     <h2>Contribuciones</h2>
-    <p>Las contribuciones son bienvenidas. Por favor, abre un issue o pull request si encuentras algún problema o deseas proponer una mejora. Sería una experiencia refrescante. :)</p>
+    <p>Las contribuciones son bienvenidas. Si encontrás algún problema o querés proponer mejoras, podés abrir un issue o pull request. ¡Gracias por colaborar! :)</p>
 </body>
 </html>

@@ -1,10 +1,17 @@
-// archivo: routes/products.js
+// file name: ./routes/products.js
+// Alumno: Alessio (Elazar) Aguirre Pimentel
 
-const express = require('express');
-const { productValidator } = require('../middlewares/product.validator');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { productValidator } from '../middlewares/product.validator.js';
+import { readFile, writeFile } from '../utils/fileHelper.js';
+
+// ES nuevo contexto para __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const router = express.Router();
-const { readFile, writeFile } = require('../utils/fileHelper');
 
 const productsFilePath = path.join(__dirname, '../data/productos.json');
 
@@ -21,11 +28,11 @@ router.get('/', async (req, res) => {
 // GET un producto por ID
 router.get('/:id', async (req, res) => {
   const productId = parseInt(req.params.id);
-  
+
   try {
     const products = await readFile(productsFilePath);
     const product = products.find(p => p.id === productId);
-    
+
     if (!product) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
@@ -35,7 +42,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST un nuevo producto con middleware de validación
+// POST un nuevo producto con validación
 router.post('/', productValidator, async (req, res) => {
   const { title, price, thumbnail } = req.body;
 
@@ -56,4 +63,4 @@ router.post('/', productValidator, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
