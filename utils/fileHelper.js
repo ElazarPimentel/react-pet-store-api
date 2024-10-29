@@ -1,11 +1,15 @@
 // archivo: utils/fileHelper.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
-const fs = require('fs');
-const util = require('util');
+// archivo: utils/fileHelper.js
+// Alumno: Alessio (Elazar) Aguirre Pimentel
 
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
+import fs from 'fs';
+import { promisify } from 'util';
+
+// Prometer fs
+const readFileAsync = promisify(fs.readFile);
+const writeFileAsync = promisify(fs.writeFile);
 
 // Parámetros de backoff exponencial
 const MAX_RETRIES = 5;
@@ -13,7 +17,7 @@ const BASE_DELAY = 100; // en ms
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const readFile = async (filePath) => {
+export const readFile = async (filePath) => {
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
             const data = await readFileAsync(filePath, 'utf8');
@@ -27,7 +31,7 @@ const readFile = async (filePath) => {
     }
 };
 
-const writeFile = async (filePath, data) => {
+export const writeFile = async (filePath, data) => {
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
         try {
             await writeFileAsync(filePath, JSON.stringify(data, null, 2), 'utf8');
@@ -40,5 +44,3 @@ const writeFile = async (filePath, data) => {
         }
     }
 };
-
-module.exports = { readFile, writeFile };
