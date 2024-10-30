@@ -1,4 +1,4 @@
-// file name: app.js
+// filename: app.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
@@ -7,17 +7,16 @@ import { fileURLToPath } from 'url';
 import productRoutes from './routes/products.js';
 import cartRoutes from './routes/carts.js';
 
-// ES nuevo contexto para __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Middleware para manejar JSON y datos URL codificados
+// Middleware para JSON y URL
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware para servir archivos estáticos
+// Middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas de productos y carritos
