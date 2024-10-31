@@ -1,4 +1,4 @@
-<!-- filename: public/index.html -->
+<!-- public/index.html -->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -107,7 +107,57 @@ npm start
         <li><strong>Express.js</strong> como framework backend.</li>
     </ul>
 
+    <h2>Middleware</h2>
+    <p>La API utiliza varios middleware personalizados para mejorar su funcionalidad:</p>
+    <ul>
+        <li><strong>Manejo de Errores</strong>: Middleware que captura y gestiona errores de manera uniforme en toda la aplicación.</li>
+        <li><strong>Validación de Datos</strong>: Middleware que valida los datos de entrada en las solicitudes, asegurando que tengan los formatos y requisitos correctos.</li>
+        <li><strong>CORS</strong>: Configuración de Cross-Origin Resource Sharing para permitir solicitudes de dominios específicos.</li>
+        <li><strong>Análisis de JSON</strong>: Middleware para interpretar el cuerpo de las solicitudes JSON.</li>
+    </ul>
+
+    <h2>Notas Adicionales</h2>
+    <ul>
+        <li><strong>Persistencia de Datos en Vercel</strong>: Debido a las restricciones del sistema de archivos de Vercel, los archivos JSON para productos y carritos se almacenan en el directorio `/tmp`, que es temporal y se reinicia en cada invocación de función. Para una persistencia de datos real, se recomienda utilizar una base de datos externa.</li>
+        <li><strong>Limitaciones de `/tmp`</strong>: Recordá que los datos almacenados en `/tmp` no son persistentes y se perderán entre las ejecuciones. Esto es adecuado para propósitos de prueba y desarrollo, pero no para un entorno de producción.</li>
+    </ul>
+
     <h2>Contribuciones</h2>
     <p>Las contribuciones son bienvenidas. Si encontrás algún problema o querés proponer mejoras, podés abrir un issue o pull request. ¡Gracias por colaborar! :)</p>
+
+    <h3>Descripción de los Cambios Realizados:</h3>
+    <ol>
+        <li><strong>Actualización de Endpoints:</strong>
+            <ul>
+                <li><strong>Productos:</strong>
+                    <ul>
+                        <li>Se añadieron los endpoints <code>PUT /products/:id</code> y <code>DELETE /products/:id</code> para cumplir con los requisitos de actualización y eliminación de productos.</li>
+                        <li>Se incluyó la opción de limitar los productos retornados en <code>GET /products</code> mediante el parámetro de consulta <code>?limit</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Carritos:</strong>
+                    <ul>
+                        <li>Se mantuvieron los endpoints existentes, asegurando que cumplan con los requisitos de la asignación.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><strong>Detalles de Campos:</strong>
+            <ul>
+                <li>Se especificaron claramente los campos requeridos y opcionales para los endpoints <code>POST</code> y <code>PUT</code> de productos.</li>
+                <li>Se aclaró que el campo <code>thumbnails</code> es opcional y no se fuerza una imagen por defecto.</li>
+            </ul>
+        </li>
+        <li><strong>Notas Adicionales:</strong>
+            <ul>
+                <li>Se añadió una sección sobre la persistencia de datos en Vercel, destacando las limitaciones del directorio <code>/tmp</code> y recomendando el uso de una base de datos externa para la persistencia real.</li>
+            </ul>
+        </li>
+        <li><strong>Ejemplos de Uso:</strong>
+            <ul>
+                <li>Se incluyeron ejemplos prácticos para los distintos endpoints, facilitando el entendimiento y uso de la API.</li>
+            </ul>
+        </li>
+    </ol>
 </body>
 </html>

@@ -19,14 +19,22 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware para archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rutas de productos y carritos
+// Rutas productos y carritos
 app.use('/products', productRoutes);
 app.use('/carts', cartRoutes);
 
-// Middleware para manejar rutas no encontradas (404)
+// Middleware para rutas no encontradas 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Ruta no encontrada" });
 });
 
 // Export para Vercel 
 export default app;
+
+// Iniciar el servidor localmente
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  });
+}

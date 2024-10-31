@@ -1,5 +1,3 @@
-### **README.md**
-
 # Pata-Pata Petstore API
 
 **Pata-Pata Petstore API** es una API backend creada en **Node.js** y **Express.js** que administra listados de productos y carritos de compras para una tienda de mascotas online. Esta API provee endpoints para **consultar detalles de productos**, **agregar nuevos productos**, **actualizar y eliminar productos**, y **gestionar carritos de compras**.
@@ -14,10 +12,10 @@
 ## Instalación
 1. Cloná este repositorio.
 2. Instalá las dependencias con:
-   npm install
+    npm install
 
 3. Ejecutá la aplicación localmente con:
-   npm start
+    npm start
 
 ## Endpoints
 ### Productos
@@ -62,32 +60,34 @@ Podés utilizar herramientas como **Postman** para hacer solicitudes **GET**, **
 ### **Ejemplos:**
 
 - **Agregar un nuevo producto:**
-  POST /products
-  {
-    "title": "Juguete para Gatos",
-    "description": "Un juguete divertido para gatos",
-    "code": "JG-001",
-    "price": 15.99,
-    "stock": 100,
-    "category": "Juguetes",
-    "thumbnails": ["https://mi-tienda.com/images/juguete_gato.jpg"]
-  }
-  
+    POST /products
+    Content-Type: application/json
+
+    {
+      "title": "Juguete para Gatos",
+      "description": "Un juguete divertido para gatos",
+      "code": "JG-001",
+      "price": 15.99,
+      "stock": 100,
+      "category": "Juguetes",
+      "thumbnails": ["https://mi-tienda.com/images/juguete_gato.jpg"]
+    }
 
 - **Actualizar un producto existente:**
-  PUT /products/1
-  {
-    "price": 17.99,
-    "stock": 95
-  }
-  
+    PUT /products/1
+    Content-Type: application/json
+
+    {
+      "price": 17.99,
+      "stock": 95
+    }
+
 
 - **Crear un nuevo carrito:**
     POST /carts
-  
 
 - **Agregar un producto al carrito:**
-  POST /carts/1/product/2
+    POST /carts/1/product/2
 
 
 ## Deploy

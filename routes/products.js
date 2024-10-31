@@ -1,15 +1,16 @@
-// Filename: ./routes/products.js
+// Filename: routes/products.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
 import { productValidator } from '../middlewares/product.validator.js';
+import { updateProductValidator } from '../middlewares/updateProduct.validator.js';
 import { readFile, writeFile } from '../utils/fileHelper.js';
 
 const router = express.Router();
 
 const productsFileName = 'productos.json'; // Nombre del archivo en /tmp
 
-// GET todos los productos con opción de limit
+// GET productos con opcion de limit
 router.get('/', async (req, res) => {
   try {
     const products = await readFile(productsFileName);
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res) => {
     }
     res.json(product);
   } catch (error) {
-    res.status(500).json({ error: `Erro leyendo el archivo de productos: ${error.message}` });
+    res.status(500).json({ error: `Error leyendo el archivo de productos: ${error.message}` });
   }
 });
 
@@ -55,7 +56,7 @@ router.post('/', productValidator, async (req, res) => {
       stock,
       category,
       status: status !== undefined ? status : true, // Predeterminado true
-      thumbnails, // Opcional a solicitud del profe
+      thumbnails, // Opcional 
     };
 
     products.push(newProduct);
@@ -66,8 +67,8 @@ router.post('/', productValidator, async (req, res) => {
   }
 });
 
-// PUT para actualizar un producto x ID
-router.put('/:id', productValidator, async (req, res) => {
+// PUT  actualizar producto x ID
+router.put('/:id', updateProductValidator, async (req, res) => {
   const productId = parseInt(req.params.id);
   const { title, description, code, price, stock, category, status, thumbnails } = req.body;
 
@@ -82,12 +83,12 @@ router.put('/:id', productValidator, async (req, res) => {
     // Actualizar campos (menos id)
     products[productIndex] = {
       ...products[productIndex],
-      title,
-      description,
-      code,
-      price,
-      stock,
-      category,
+      title: title !== undefined ? title : products[productIndex].title,
+      description: description !== undefined ? description : products[productIndex].description,
+      code: code !== undefined ? code : products[productIndex].code,
+      price: price !== undefined ? price : products[productIndex].price,
+      stock: stock !== undefined ? stock : products[productIndex].stock,
+      category: category !== undefined ? category : products[productIndex].category,
       status: status !== undefined ? status : products[productIndex].status,
       thumbnails: thumbnails !== undefined ? thumbnails : products[productIndex].thumbnails,
     };
@@ -99,7 +100,7 @@ router.put('/:id', productValidator, async (req, res) => {
   }
 });
 
-// DELETE un producto x ID
+// DELETE producto x ID
 router.delete('/:id', async (req, res) => {
   const productId = parseInt(req.params.id);
 
@@ -115,7 +116,7 @@ router.delete('/:id', async (req, res) => {
     await writeFile(productsFileName, products);
     res.json({ message: 'Producto eliminado', producto: deletedProduct });
   } catch (error) {
-    res.status(500).json({ error: `Error eliminando el producto${error.message}` });
+    res.status(500).json({ error: `Error eliminando el producto: ${error.message}` });
   }
 });
 
