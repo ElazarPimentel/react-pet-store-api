@@ -1,0 +1,18 @@
+{{!-- views/products.handlebars --}}
+{{!-- Alumno: Alessio (Elazar) Aguirre Pimentel --}}
+{{#extend "main"}}
+    {{#content "body"}}
+        <h2>Productos</h2>
+        <div id="product-list">
+            {{#each products}}
+                <div class="product-item">
+                    <img src="{{thumbnail}}" alt="{{title}}" />
+                    <h3>{{title}}</h3>
+                    <p>Precio: ${{price}}</p>
+                    <button onclick="addToCart('{{_id}}')">Agregar al carrito</button>
+                </div>
+            {{/each}}
+        </div>
+        <script src="/index.js"></script>
+    {{/content}}
+{{/extend}}

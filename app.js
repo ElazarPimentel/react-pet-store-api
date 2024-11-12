@@ -1,33 +1,40 @@
-// filename: app.js
+// Filename: app.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { connectToDatabase } from './db/connection.js'; 
-import productRoutes from './routes/products.js';
-import cartRoutes from './routes/carts.js';
+import { productRoutes } from './routes/products.js';
+import { cartRoutes } from './routes/carts.js';
+import handlebars from 'express-handlebars';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Conexión a MongoDB
-connectToDatabase(); 
-
-// Middleware para URLs y JSON
+// Middleware para JSON y datos URL-codificados
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Lugar para archivos estáticos
+// Configurar Handlebars como motor de vistas
+app.engine('handlebars', handlebars.engine());
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
+
+// Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas para productos y carritos
 app.use('/products', productRoutes);
 app.use('/carts', cartRoutes);
 
-// Middleware para 404 - Ruta no encontrada
+// Ruta para renderizar la página principal
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+// Middleware para 404
 app.use((req, res) => {
   res.status(404).json({ message: "Ruta no encontrada" });
 });
@@ -35,7 +42,7 @@ app.use((req, res) => {
 // Exportar para Vercel
 export default app;
 
-// Inicio local del servidor
+// Iniciar el servidor localmente
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {

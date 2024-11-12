@@ -2,122 +2,64 @@
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
+import { productManager } from '../managers/product.manager.js';
 import { productValidator } from '../middlewares/product.validator.js';
 import { updateProductValidator } from '../middlewares/updateProduct.validator.js';
-import { readFile, writeFile } from '../utils/fileHelper.js';
 
 const router = express.Router();
 
-const productsFileName = 'productos.json'; // Nombre del archivo en /tmp
-
-// GET productos con opcion de limit
+// GET todos los productos con límite (límite opcional
 router.get('/', async (req, res) => {
   try {
-    const products = await readFile(productsFileName);
+    const products = await productManager.getAll();
     const limit = parseInt(req.query.limit);
-    if (limit && !isNaN(limit)) {
-      return res.json(products.slice(0, limit));
-    }
-    res.json(products);
+    res.json(limit ? products.slice(0, limit) : products);
   } catch (error) {
-    res.status(500).json({ error: `Error leyendo el archivo de productos:${error.message}` });
+    res.status(500).json({ error: `Error fetching products: ${error.message}` });
   }
 });
 
-// GET un producto x ID
+// GET un solo producto por ID
 router.get('/:id', async (req, res) => {
-  const productId = parseInt(req.params.id);
-
   try {
-    const products = await readFile(productsFileName);
-    const product = products.find(p => p.id === productId);
-
-    if (!product) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
+    const product = await productManager.getById(req.params.id);
+    if (!product) return res.status(404).json({ error: 'Product not found' });
     res.json(product);
   } catch (error) {
-    res.status(500).json({ error: `Error leyendo el archivo de productos: ${error.message}` });
+    res.status(500).json({ error: `Error fetching product: ${error.message}` });
   }
 });
 
-// POST nuevo producto 
+// POST un nuevo producto
 router.post('/', productValidator, async (req, res) => {
-  const { title, description, code, price, stock, category, status, thumbnails } = req.body;
-
   try {
-    const products = await readFile(productsFileName);
-    const newProduct = {
-      id: products.length + 1,
-      title,
-      description,
-      code,
-      price,
-      stock,
-      category,
-      status: status !== undefined ? status : true, // Predeterminado true
-      thumbnails, // Opcional 
-    };
-
-    products.push(newProduct);
-    await writeFile(productsFileName, products);
+    const newProduct = await productManager.addProduct(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(500).json({ error: `Error guardando el producto: ${error.message}` });
+    res.status(500).json({ error: `Error adding product: ${error.message}` });
   }
 });
 
-// PUT  actualizar producto x ID
+// PUT para actualizar un producto existente por ID
 router.put('/:id', updateProductValidator, async (req, res) => {
-  const productId = parseInt(req.params.id);
-  const { title, description, code, price, stock, category, status, thumbnails } = req.body;
-
   try {
-    const products = await readFile(productsFileName);
-    const productIndex = products.findIndex(p => p.id === productId);
-
-    if (productIndex === -1) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    // Actualizar campos (menos id)
-    products[productIndex] = {
-      ...products[productIndex],
-      title: title !== undefined ? title : products[productIndex].title,
-      description: description !== undefined ? description : products[productIndex].description,
-      code: code !== undefined ? code : products[productIndex].code,
-      price: price !== undefined ? price : products[productIndex].price,
-      stock: stock !== undefined ? stock : products[productIndex].stock,
-      category: category !== undefined ? category : products[productIndex].category,
-      status: status !== undefined ? status : products[productIndex].status,
-      thumbnails: thumbnails !== undefined ? thumbnails : products[productIndex].thumbnails,
-    };
-
-    await writeFile(productsFileName, products);
-    res.json(products[productIndex]);
+    const updatedProduct = await productManager.updateProduct(req.params.id, req.body);
+    if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
+    res.json(updatedProduct);
   } catch (error) {
-    res.status(500).json({ error: `Error actualizando el producto: ${error.message}` });
+    res.status(500).json({ error: `Error updating product: ${error.message}` });
   }
 });
 
-// DELETE producto x ID
+// DELETE un producto por ID
 router.delete('/:id', async (req, res) => {
-  const productId = parseInt(req.params.id);
-
   try {
-    const products = await readFile(productsFileName);
-    const productIndex = products.findIndex(p => p.id === productId);
-
-    if (productIndex === -1) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
-    }
-
-    const deletedProduct = products.splice(productIndex, 1)[0];
-    await writeFile(productsFileName, products);
-    res.json({ message: 'Producto eliminado', producto: deletedProduct });
+    const deletedProduct = await productManager.deleteProduct(req.params.id);
+    if (!deletedProduct) return res.status(404).json({ error: 'Product not found' });
+    res.json({ message: 'Product deleted', product: deletedProduct });
   } catch (error) {
-    res.status(500).json({ error: `Error eliminando el producto: ${error.message}` });
+    res.status(500).json({ error: `Error deleting product: ${error.message}` });
   }
 });
 
-export default router;
+export { router as productRoutes };
