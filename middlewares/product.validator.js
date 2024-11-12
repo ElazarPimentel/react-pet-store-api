@@ -4,48 +4,32 @@
 export const productValidator = (req, res, next) => {
   const { title, description, code, price, stock, category, status, thumbnails } = req.body;
 
-  // Título
+  // Validar campos requeridos
   if (!title || typeof title !== 'string') {
-    return res.status(400).json({ message: "El campo 'title' es requerido y debe ser una cadena de texto" });
+    return res.status(400).json({ message: "El campo 'title' es obligatorio y debe ser una cadena de texto" });
   }
-
-  // Descripción
   if (!description || typeof description !== 'string') {
-    return res.status(400).json({ message: "El campo 'description' es requerido y debe ser una cadena de texotr" });
+    return res.status(400).json({ message: "El campo 'description' es obligatorio y debe ser una cadena de texto" });
   }
-
-  // Código
   if (!code || typeof code !== 'string') {
-    return res.status(400).json({ message: "El campo 'code' es requerido y debe ser una cadena de texto" });
+    return res.status(400).json({ message: "El campo 'code' es obligatorio y debe ser una cadena de texto" });
   }
-
-  // Precio
   if (price === undefined || typeof price !== 'number') {
-    return res.status(400).json({ message: "El campo 'price' es requerido y debe ser un numero" });
+    return res.status(400).json({ message: "El campo 'price' es obligatorio y debe ser un número" });
   }
-
-  // Stock
   if (stock === undefined || typeof stock !== 'number') {
-    return res.status(400).json({ message: "El campo 'stock' es requerido y debe ser un número" });
+    return res.status(400).json({ message: "El campo 'stock' es obligatorio y debe ser un número" });
   }
-
-  // Categoría
   if (!category || typeof category !== 'string') {
-    return res.status(400).json({ message: "El campo 'category' es requerido y debe ser una cadena de texto" });
+    return res.status(400).json({ message: "El campo 'category' es obligatorio y debe ser una cadena de texto" });
   }
-
-  // Estado (opcional, por defecto true)
   if (status !== undefined && typeof status !== 'boolean') {
     return res.status(400).json({ message: "El campo 'status' debe ser un booleano" });
   }
-
-  // Thumbnails (opcional, array de strings)
-  if (thumbnails !== undefined) {
-    if (!Array.isArray(thumbnails) || !thumbnails.every(thumb => typeof thumb === 'string')) {
-      return res.status(400).json({ message: "El campo 'thumbnails' debe ser un array de cadenas de texto" });
-    }
+  // Recordar que es opcional
+  if (thumbnails !== undefined && (!Array.isArray(thumbnails) || !thumbnails.every((thumb) => typeof thumb === 'string'))) {
+    return res.status(400).json({ message: "El campo 'thumbnails' debe ser un arreglo de cadenas de texto" });
   }
 
-  // Si todo validado, pasar al siguiente middleware o router o lo que corresponda
   next();
 };

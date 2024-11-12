@@ -2,63 +2,63 @@
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
-import { productManager } from '../managers/product.manager.js';
+import productManager from '../managers/product.manager.js';
 import { productValidator } from '../middlewares/product.validator.js';
 import { updateProductValidator } from '../middlewares/updateProduct.validator.js';
 
 const router = express.Router();
 
-// GET todos los productos con límite (límite opcional
+// Obtener todos los productos
 router.get('/', async (req, res) => {
   try {
     const products = await productManager.getAll();
     const limit = parseInt(req.query.limit);
     res.json(limit ? products.slice(0, limit) : products);
   } catch (error) {
-    res.status(500).json({ error: `Error fetching products: ${error.message}` });
+    res.status(500).json({ error: 'Error al obtener los productos: ' + error.message });
   }
 });
 
-// GET un solo producto por ID
+// Obtener producto por ID
 router.get('/:id', async (req, res) => {
   try {
     const product = await productManager.getById(req.params.id);
-    if (!product) return res.status(404).json({ error: 'Product not found' });
+    if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
     res.json(product);
   } catch (error) {
-    res.status(500).json({ error: `Error fetching product: ${error.message}` });
+    res.status(500).json({ error: 'Error al obtener el producto: ' + error.message });
   }
 });
 
-// POST un nuevo producto
+// Agregar nuevo producto
 router.post('/', productValidator, async (req, res) => {
   try {
     const newProduct = await productManager.addProduct(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(500).json({ error: `Error adding product: ${error.message}` });
+    res.status(500).json({ error: 'Error al agregar el producto: ' + error.message });
   }
 });
 
-// PUT para actualizar un producto existente por ID
+// Actualizar producto existente
 router.put('/:id', updateProductValidator, async (req, res) => {
   try {
     const updatedProduct = await productManager.updateProduct(req.params.id, req.body);
-    if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
+    if (!updatedProduct) return res.status(404).json({ error: 'Producto no encontrado' });
     res.json(updatedProduct);
   } catch (error) {
-    res.status(500).json({ error: `Error updating product: ${error.message}` });
+    res.status(500).json({ error: 'Error al actualizar el producto: ' + error.message });
   }
 });
 
-// DELETE un producto por ID
+// Eliminar producto
 router.delete('/:id', async (req, res) => {
   try {
     const deletedProduct = await productManager.deleteProduct(req.params.id);
-    if (!deletedProduct) return res.status(404).json({ error: 'Product not found' });
-    res.json({ message: 'Product deleted', product: deletedProduct });
+    if (!deletedProduct) return res.status(404).json({ error: 'Producto no encontrado' });
+    res.json({ message: 'Producto eliminado', product: deletedProduct });
   } catch (error) {
-    res.status(500).json({ error: `Error deleting product: ${error.message}` });
+    res.status(500).json({ error: 'Error al eliminar el producto: ' + error.message });
   }
 });
 

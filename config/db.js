@@ -1,4 +1,4 @@
-// filename: config/db.js
+// Filename: config/db.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import mongoose from 'mongoose';
@@ -9,11 +9,11 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('Connected to MongoDB');
+    console.log('Conectado a MongoDB');
   } catch (error) {
-    console.error('MongoDB connection error:', error.message);
-    process.exit(1); 
+    console.error('Error de conexión a MongoDB:', error.message);
+    process.exit(1);
   }
 };
 
-export { connectDB };
+export default connectDB;

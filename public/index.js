@@ -1,23 +1,22 @@
 // public/index.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
-function addToCart(productId) {
-    fetch(`/carts/add/${productId}`, {
+async function addToCart(productId) {
+    try {
+      const response = await fetch(`/carts/add/${productId}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error('Error:', data.error);
-            alert('Hubo un problema al agregar el producto al carrito');
-        } else {
-            alert('Producto agregado al carrito');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await response.json();
+      if (data.error) {
+        console.error('Error:', data.error);
+        alert('Hubo un problema al agregar el producto al carrito');
+      } else {
+        alert('Producto agregado al carrito');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error de red al agregar el producto al carrito');
+    }
+  }
+  

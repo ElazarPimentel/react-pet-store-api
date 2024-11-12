@@ -1,21 +1,30 @@
 // Filename: managers/cart.manager.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
-import { CartModel } from "../models/cart.model.js";
+import CartModel from '../models/cart.model.js';
 
 class CartManager {
+  async createCart() {
+    try {
+      const newCart = new CartModel({ products: [] });
+      return await newCart.save();
+    } catch (error) {
+      throw new Error('Error al crear el carrito: ' + error.message);
+    }
+  }
+
   async getById(cartId) {
     try {
-      return await CartModel.findById(cartId).populate("products.productId");
+      return await CartModel.findById(cartId).populate('products.productId');
     } catch (error) {
-      throw new Error("Error retrieving cart: " + error.message);
+      throw new Error('Error al obtener el carrito: ' + error.message);
     }
   }
 
   async addProductToCart(cartId, productId, quantity = 1) {
     try {
       const cart = await CartModel.findById(cartId);
-      const productInCart = cart.products.find(p => p.productId.equals(productId));
+      const productInCart = cart.products.find((p) => p.productId.equals(productId));
 
       if (productInCart) {
         productInCart.quantity += quantity;
@@ -25,41 +34,25 @@ class CartManager {
 
       return await cart.save();
     } catch (error) {
-      throw new Error("Error adding product to cart: " + error.message);
+      throw new Error('Error al agregar producto al carrito: ' + error.message);
     }
   }
-
-  async updateProductQuantity(cartId, productId, quantityChange) {
-    try {
-      const cart = await CartModel.findById(cartId);
-      const productInCart = cart.products.find(p => p.productId.equals(productId));
-
-      if (productInCart) {
-        productInCart.quantity += quantityChange;
-        if (productInCart.quantity <= 0) {
-          cart.products = cart.products.filter(p => !p.productId.equals(productId));
-        }
-      } else {
-        throw new Error("Product not found in cart");
-      }
-
-      return await cart.save();
-    } catch (error) {
-      throw new Error("Error updating product quantity in cart: " + error.message);
-    }
-  }
+  
 
   async removeProductFromCart(cartId, productId) {
     try {
-      const cart = await CartModel.findByIdAndUpdate(cartId, {
-        $pull: { products: { productId } }
-      }, { new: true });
-
+      const cart = await CartModel.findByIdAndUpdate(
+        cartId,
+        { $pull: { products: { productId } } },
+        { new: true }
+      );
       return cart;
     } catch (error) {
-      throw new Error("Error removing product from cart: " + error.message);
+      throw new Error('Error al eliminar producto del carrito: ' + error.message);
     }
   }
 }
 
-export const cartManager = new CartManager();
+
+
+export default new CartManager();
