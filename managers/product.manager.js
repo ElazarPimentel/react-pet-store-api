@@ -12,7 +12,6 @@ class ProductManager {
     }
   }
 
-
   async getById(id) {
     try {
       return await ProductModel.findById(id);
@@ -29,8 +28,6 @@ class ProductManager {
       throw new Error('Error al agregar el producto: ' + error.message);
     }
   }
-
-  
 
   async updateProduct(id, updateData) {
     try {
@@ -49,4 +46,4 @@ class ProductManager {
   }
 }
 
-export default new ProductManager();
+export const productManager = new ProductManager();

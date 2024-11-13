@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import { productRoutes } from './routes/products.js';
 import { cartRoutes } from './routes/carts.js';
 import { viewsRouter } from './routes/views.router.js';
-import handlebars from 'express-handlebars';
+import { engine } from 'express-handlebars'; // Importa 'engine' en lugar de 'handlebars'
 import connectDB from './config/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,27 +22,27 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configurar Handlebars como motor de vistas
-app.engine('handlebars', handlebars());
+// Handlebars a motor de vistas !
+app.engine('handlebars', engine()); // A ver si así me funciona
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
-// Servir archivos estáticos
+// Archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rutas para vistas
+// Rutas vistas
 app.use('/', viewsRouter);
 
-// Rutas para API
+// Rutas API
 app.use('/api/products', productRoutes);
 app.use('/api/carts', cartRoutes);
 
-// Middleware para 404
+// Middleware 404
 app.use((req, res) => {
   res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
-// Iniciar el servidor
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);

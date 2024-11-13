@@ -2,14 +2,14 @@
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
 import express from 'express';
-import productManager from '../managers/product.manager.js';
+import { productManager } from '../managers/product.manager.js';
 import { productValidator } from '../middlewares/product.validator.js';
 import { updateProductValidator } from '../middlewares/updateProduct.validator.js';
 
-const router = express.Router();
+export const productRoutes = express.Router();
 
-// Obtener todos los productos
-router.get('/', async (req, res) => {
+// Obtener todos productos
+productRoutes.get('/', async (req, res) => {
   try {
     const products = await productManager.getAll();
     const limit = parseInt(req.query.limit);
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 // Obtener producto por ID
-router.get('/:id', async (req, res) => {
+productRoutes.get('/:id', async (req, res) => {
   try {
     const product = await productManager.getById(req.params.id);
     if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
@@ -30,8 +30,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Agregar nuevo producto
-router.post('/', productValidator, async (req, res) => {
+// Agregar producto
+productRoutes.post('/', productValidator, async (req, res) => {
   try {
     const newProduct = await productManager.addProduct(req.body);
     res.status(201).json(newProduct);
@@ -40,8 +40,8 @@ router.post('/', productValidator, async (req, res) => {
   }
 });
 
-// Actualizar producto existente
-router.put('/:id', updateProductValidator, async (req, res) => {
+// Actualizar existente
+productRoutes.put('/:id', updateProductValidator, async (req, res) => {
   try {
     const updatedProduct = await productManager.updateProduct(req.params.id, req.body);
     if (!updatedProduct) return res.status(404).json({ error: 'Producto no encontrado' });
@@ -52,7 +52,7 @@ router.put('/:id', updateProductValidator, async (req, res) => {
 });
 
 // Eliminar producto
-router.delete('/:id', async (req, res) => {
+productRoutes.delete('/:id', async (req, res) => {
   try {
     const deletedProduct = await productManager.deleteProduct(req.params.id);
     if (!deletedProduct) return res.status(404).json({ error: 'Producto no encontrado' });
@@ -61,5 +61,3 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar el producto: ' + error.message });
   }
 });
-
-export { router as productRoutes };

@@ -37,6 +37,9 @@ class CartManager {
       throw new Error('Error al agregar producto al carrito: ' + error.message);
     }
   }
+
+
+
   
 
   async removeProductFromCart(cartId, productId) {
@@ -53,6 +56,4 @@ class CartManager {
   }
 }
 
-
-
-export default new CartManager();
+export const cartManager = new CartManager();
