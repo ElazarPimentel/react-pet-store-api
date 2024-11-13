@@ -6,7 +6,7 @@ Alumno: Alessio (Elazar) Aguirre Pimentel --}}
   {{#each products}}
     <div class="product-item">
       <h3>{{this.title}}</h3>
-      <p>{{this.description}}</p>
+      <img src="{{this.thumbnail}}" alt="{{this.title}}" width="150" height="150" />
       <p>Precio: ${{this.price}}</p>
       <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
     </div>
