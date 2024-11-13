@@ -41,7 +41,7 @@
         <li><strong>Productos</strong>: Los usuarios pueden obtener una lista de productos disponibles en la tienda, ver detalles de productos individuales por su ID, agregar nuevos productos al catálogo, actualizar productos existentes y eliminar productos.</li>
         <li><strong>Carritos de Compras</strong>: Los usuarios pueden crear carritos de compras, agregar productos al carrito y actualizar la cantidad de productos en los carritos existentes.</li>
         <li><strong>Archivos Estáticos</strong>: La API también sirve imágenes de los productos (thumbnails) almacenadas en el directorio público del servidor.</li>
-        <li><strong>Persistencia de Datos</strong>: Los datos de productos y carritos se almacenan en archivos JSON ubicados en el directorio `/tmp` para compatibilidad con Vercel.</li>
+        <li><strong>Persistencia de Datos</strong>: Los datos de productos y carritos se almacenan en una base de datos MongoDB local.</li>
     </ul>
 
     <h2>Instalación</h2>
@@ -53,9 +53,9 @@ npm start
     <h2>Endpoints</h2>
     <h3>Productos</h3>
     <ul>
-        <li><strong>GET /products</strong>: Obtené todos los productos disponibles. Podés agregar un parámetro de consulta <code>?limit</code> para limitar la cantidad de productos retornados.</li>
-        <li><strong>GET /products/:id</strong>: Consultá un producto específico por su ID.</li>
-        <li><strong>POST /products</strong>: Agregá un nuevo producto al catálogo. Campos requeridos:
+        <li><strong>GET /api/products</strong>: Obtené todos los productos disponibles. Podés agregar un parámetro de consulta <code>?limit</code> para limitar la cantidad de productos retornados.</li>
+        <li><strong>GET /api/products/:id</strong>: Consultá un producto específico por su ID.</li>
+        <li><strong>POST /api/products</strong>: Agregá un nuevo producto al catálogo. Campos requeridos:
             <ul>
                 <li><code>title</code> (string)</li>
                 <li><code>description</code> (string)</li>
@@ -70,7 +70,7 @@ npm start
                 <li><code>thumbnails</code> (array de strings con rutas de imágenes)</li>
             </ul>
         </li>
-        <li><strong>PUT /products/:id</strong>: Actualizá los campos de un producto existente excepto su <code>id</code>. Campos a actualizar:
+        <li><strong>PUT /api/products/:id</strong>: Actualizá los campos de un producto existente excepto su <code>id</code>. Campos a actualizar:
             <ul>
                 <li><code>title</code> (string)</li>
                 <li><code>description</code> (string)</li>
@@ -82,14 +82,14 @@ npm start
                 <li><code>thumbnails</code> (array de strings con rutas de imágenes)</li>
             </ul>
         </li>
-        <li><strong>DELETE /products/:id</strong>: Eliminá un producto por su ID.</li>
+        <li><strong>DELETE /api/products/:id</strong>: Eliminá un producto por su ID.</li>
     </ul>
 
     <h3>Carritos</h3>
     <ul>
-        <li><strong>GET /carts/:id</strong>: Consultá un carrito por su ID.</li>
-        <li><strong>POST /carts</strong>: Creá un nuevo carrito con un <code>id</code> auto-generado y un array vacío de <code>products</code>.</li>
-        <li><strong>POST /carts/:cid/product/:pid</strong>: Agregá un producto al carrito o actualizá la cantidad de un producto existente en el carrito. 
+        <li><strong>GET /api/carts/:id</strong>: Consultá un carrito por su ID.</li>
+        <li><strong>POST /api/carts</strong>: Creá un nuevo carrito con un <code>id</code> auto-generado y un array vacío de <code>products</code>.</li>
+        <li><strong>POST /api/carts/:cid/product/:pid</strong>: Agregá un producto al carrito o actualizá la cantidad de un producto existente en el carrito.
             <ul>
                 <li><code>product</code> (ID del producto)</li>
                 <li><code>quantity</code> (incrementa si el producto ya existe en el carrito)</li>
@@ -97,14 +97,11 @@ npm start
         </li>
     </ul>
 
-    <h2>Despliegue</h2>
-    <p>Esta API está desplegada en Vercel y se puede acceder a través del siguiente enlace:</p>
-    <p><a href="https://react-pet-store-api.vercel.app">https://react-pet-store-api.vercel.app</a></p>
-
     <h2>Requerimientos</h2>
     <ul>
         <li><strong>Node.js</strong> versión 14 o superior.</li>
         <li><strong>Express.js</strong> como framework backend.</li>
+        <li><strong>MongoDB</strong> como base de datos.</li>
     </ul>
 
     <h2>Middleware</h2>
@@ -118,46 +115,14 @@ npm start
 
     <h2>Notas Adicionales</h2>
     <ul>
-        <li><strong>Persistencia de Datos en Vercel</strong>: Debido a las restricciones del sistema de archivos de Vercel, los archivos JSON para productos y carritos se almacenan en el directorio `/tmp`, que es temporal y se reinicia en cada invocación de función. Para una persistencia de datos real, se recomienda utilizar una base de datos externa.</li>
-        <li><strong>Limitaciones de `/tmp`</strong>: Recordá que los datos almacenados en `/tmp` no son persistentes y se perderán entre las ejecuciones. Esto es adecuado para propósitos de prueba y desarrollo, pero no para un entorno de producción.</li>
+        <li><strong>Persistencia de Datos</strong>: Ahora los datos se almacenan en una base de datos MongoDB local, lo que permite una persistencia real de la información y facilita las operaciones CRUD.</li>
     </ul>
 
-    <h2>Contribuciones</h2>
-    <p>Las contribuciones son bienvenidas. Si encontrás algún problema o querés proponer mejoras, podés abrir un issue o pull request. ¡Gracias por colaborar! :)</p>
+    <h2>Repositorio</h2>
+    <p>Puedes encontrar el código fuente de este proyecto en el siguiente repositorio de GitHub:</p>
+    <p><a href="https://github.com/ElazarPimentel/react-pet-store-api">https://github.com/ElazarPimentel/react-pet-store-api</a></p>
 
-    <h3>Descripción de los Cambios Realizados:</h3>
-    <ol>
-        <li><strong>Actualización de Endpoints:</strong>
-            <ul>
-                <li><strong>Productos:</strong>
-                    <ul>
-                        <li>Se añadieron los endpoints <code>PUT /products/:id</code> y <code>DELETE /products/:id</code> para cumplir con los requisitos de actualización y eliminación de productos.</li>
-                        <li>Se incluyó la opción de limitar los productos retornados en <code>GET /products</code> mediante el parámetro de consulta <code>?limit</code>.</li>
-                    </ul>
-                </li>
-                <li><strong>Carritos:</strong>
-                    <ul>
-                        <li>Se mantuvieron los endpoints existentes, asegurando que cumplan con los requisitos de la asignación.</li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li><strong>Detalles de Campos:</strong>
-            <ul>
-                <li>Se especificaron claramente los campos requeridos y opcionales para los endpoints <code>POST</code> y <code>PUT</code> de productos.</li>
-                <li>Se aclaró que el campo <code>thumbnails</code> es opcional y no se fuerza una imagen por defecto.</li>
-            </ul>
-        </li>
-        <li><strong>Notas Adicionales:</strong>
-            <ul>
-                <li>Se añadió una sección sobre la persistencia de datos en Vercel, destacando las limitaciones del directorio <code>/tmp</code> y recomendando el uso de una base de datos externa para la persistencia real.</li>
-            </ul>
-        </li>
-        <li><strong>Ejemplos de Uso:</strong>
-            <ul>
-                <li>Se incluyeron ejemplos prácticos para los distintos endpoints, facilitando el entendimiento y uso de la API.</li>
-            </ul>
-        </li>
-    </ol>
+    <h2>Contribuciones</h2>
+    <p>Las contribuciones son bienvenidas. Si encuentras algún problema o quieres proponer mejoras, puedes abrir un issue o pull request en el repositorio de GitHub. ¡Gracias por colaborar! :)</p>
 </body>
 </html>

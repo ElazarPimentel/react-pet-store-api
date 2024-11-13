@@ -1,0 +1,71 @@
+<!-- views/realTimeProducts.handlebars 
+Alumno: Alessio (Elazar) Pimentel -->
+
+<h1>Productos en Tiempo Real</h1>
+
+<div id="product-form">
+  <h2>Agregar Producto</h2>
+  <form id="addProductForm">
+    <input type="text" name="title" placeholder="Título" required />
+    <input type="text" name="description" placeholder="Descripción" required />
+    <input type="text" name="code" placeholder="Código" required />
+    <input type="number" name="price" placeholder="Precio" required />
+    <input type="number" name="stock" placeholder="Stock" required />
+    <input type="text" name="category" placeholder="Categoría" required />
+    <input type="text" name="thumbnails" placeholder="Thumbnails (separados por comas)" />
+    <button type="submit">Agregar Producto</button>
+  </form>
+</div>
+
+<div id="product-list">
+  <h2>Lista de Productos</h2>
+  <ul id="products"></ul>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  // Solicitar productos al conectar
+  socket.emit('getProducts');
+
+  // Actualizar lista de productos
+  socket.on('updateProducts', (products) => {
+    const productList = document.getElementById('products');
+    productList.innerHTML = '';
+    products.forEach((product) => {
+      const li = document.createElement('li');
+      li.textContent = \`Título: \${product.title} - Precio: \${product.price}\`;
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Eliminar';
+      deleteButton.onclick = () => {
+        socket.emit('deleteProduct', product._id);
+      };
+      li.appendChild(deleteButton);
+      productList.appendChild(li);
+    });
+  });
+
+  // Manejar errores
+  socket.on('error', (error) => {
+    alert('Error: ' + error.message);
+  });
+
+  // Manejar envío del formulario para agregar producto
+  const addProductForm = document.getElementById('addProductForm');
+  addProductForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(addProductForm);
+    const productData = {
+      title: formData.get('title'),
+      description: formData.get('description'),
+      code: formData.get('code'),
+      price: parseFloat(formData.get('price')),
+      stock: parseInt(formData.get('stock')),
+      category: formData.get('category'),
+      thumbnails: formData.get('thumbnails').split(',').map(s => s.trim()).filter(s => s),
+    };
+    socket.emit('addProduct', productData);
+    addProductForm.reset();
+  });
+</script>

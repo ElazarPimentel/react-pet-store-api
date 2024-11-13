@@ -1,50 +1,15 @@
-<!-- Filename: views/cart.handlebars -->
-{{#extend "main"}}
-  {{#content "title"}}Carrito{{/content}}
+<!-- views/cart.handlebars 
+Alumno: Alessio (Elazar) Pimentel -->
 
-  <h1>Carrito de Compras</h1>
-  <div id="cart-items">
+<h1>Tu Carrito</h1>
+{{#if cart.products.length}}
+  <ul>
     {{#each cart.products}}
-      <div class="cart-item">
-        <h3>{{this.productId.title}}</h3>
-        <p>Precio: ${{this.productId.price}}</p>
-        <p>Cantidad: {{this.quantity}}</p>
-        <button onclick="updateCart('{{../_id}}', '{{this.productId._id}}', -1)">-</button>
-        <button onclick="updateCart('{{../_id}}', '{{this.productId._id}}', 1)">+</button>
-        <button onclick="removeFromCart('{{../_id}}', '{{this.productId._id}}')">Eliminar</button>
-      </div>
+      <li>
+        Producto: {{this.productId.title}} - Cantidad: {{this.quantity}}
+      </li>
     {{/each}}
-  </div>
-
-  <script>
-    function updateCart(cartId, productId, quantityChange) {
-      fetch(`/carts/${cartId}/product/${productId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quantity: quantityChange })
-      })
-      .then(response => response.json())
-      .then(data => {
-        Swal.fire("Carrito actualizado", "La cantidad fue actualizada", "success");
-        location.reload();
-      })
-      .catch(error => {
-        Swal.fire("Error", "No se pudo actualizar el carrito", "error");
-      });
-    }
-
-    function removeFromCart(cartId, productId) {
-      fetch(`/carts/${cartId}/product/${productId}`, {
-        method: 'DELETE'
-      })
-      .then(response => response.json())
-      .then(data => {
-        Swal.fire("Producto eliminado", "El producto fue eliminado del carrito", "success");
-        location.reload();
-      })
-      .catch(error => {
-        Swal.fire("Error", "No se pudo eliminar el producto", "error");
-      });
-    }
-  </script>
-{{/extend}}
+  </ul>
+{{else}}
+  <p>El carrito está vacío.</p>
+{{/if}}
