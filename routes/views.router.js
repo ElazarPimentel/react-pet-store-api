@@ -7,7 +7,7 @@ import { cartManager } from '../managers/cart.manager.js';
 
 export const viewsRouter = express.Router();
 
-// Página inicio
+// inicio
 viewsRouter.get('/', async (req, res) => {
   try {
     const products = await productManager.getAll();
@@ -17,7 +17,7 @@ viewsRouter.get('/', async (req, res) => {
   }
 });
 
-// Página productos
+// Productos
 viewsRouter.get('/products', async (req, res) => {
   try {
     const products = await productManager.getAll();
@@ -27,7 +27,7 @@ viewsRouter.get('/products', async (req, res) => {
   }
 });
 
-// Página carrito
+// Carrito
 viewsRouter.get('/cart/:id', async (req, res) => {
   try {
     const cart = await cartManager.getById(req.params.id);
@@ -37,7 +37,12 @@ viewsRouter.get('/cart/:id', async (req, res) => {
   }
 });
 
-// Página de productos tiempo real
-viewsRouter.get('/realtimeproducts', (req, res) => {
-  res.render('realTimeProducts', { title: 'Productos en Tiempo Real' });
+// Productos en tiempo real
+viewsRouter.get('/realtimeproducts', async (req, res) => {
+  try {
+    const products = await productManager.getAll();
+    res.render('realTimeProducts', { products, title: 'Productos en Tiempo Real' });
+  } catch (error) {
+    res.status(500).send('Error al cargar los productos');
+  }
 });

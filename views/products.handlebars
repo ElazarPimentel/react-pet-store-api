@@ -1,6 +1,14 @@
 {{!-- views/products.handlebars 
 Alumno: Alessio (Elazar) Aguirre Pimentel --}}
 
+<h1>Productos</h1>
+<ul>
+  {{#each products}}
+    <li>{{this.title}} - ${{this.price}}</li>
+  {{/each}}
+</ul>
+
+
 <h1>Listado de Productos</h1>
 <div id="product-list">
   {{#each products}}

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Comida para Perros",
+    "price": 29.99,
+    "thumbnail": "http://localhost/images/thumbnails/dog_food.jpg"
+  },
+  {
+    "title": "Juguete para Gatos",
+    "price": 9.99,
+    "thumbnail": "http://localhost/images/thumbnails/cat_toy.jpg"
+  },
+  {
+    "title": "Jaula para Pájaros",
+    "price": 59.99,
+    "thumbnail": "http://localhost/images/thumbnails/bird_cage.jpg"
+  },
+  {
+    "title": "Acuario",
+    "price": 79.99,
+    "thumbnail": "http://localhost/images/thumbnails/fish_tank.jpg"
+  },
+  {
+    "title": "Rueda para Hamster",
+    "price": 14.99,
+    "thumbnail": "http://localhost/images/thumbnails/hamster_wheel.jpg"
+  },
+  {
+    "title": "Lámpara de Calor para Reptiles",
+    "price": 24.99,
+    "thumbnail": "http://localhost/images/thumbnails/reptile_lamp.jpg"
+  },
+  {
+    "title": "Casa para Conejos",
+    "price": 89.99,
+    "thumbnail": "http://localhost/images/thumbnails/rabbit_hutch.jpg"
+  },
+  {
+    "title": "Cama para Cobayas",
+    "price": 12.99,
+    "thumbnail": "http://localhost/images/thumbnails/guinea_bedding.jpg"
+  },
+  {
+    "title": "Túnel para Hurones",
+    "price": 19.99,
+    "thumbnail": "http://localhost/images/thumbnails/ferret_tunnel.jpg"
+  },
+  {
+    "title": "Hábitat para Tortugas",
+    "price": 34.99,
+    "thumbnail": "http://localhost/images/thumbnails/turtle_habitat.jpg"
+  }
+]

@@ -1,13 +1,9 @@
 <!-- views/home.handlebars 
 Alumno: Alessio (Elazar) Pimentel -->
 
-<h1>Listado de Productos</h1>
-<div id="product-list">
+<h1>Inicio</h1>
+<ul>
   {{#each products}}
-    <div class="product-item">
-      <h3>{{this.title}}</h3>
-      <p>{{this.description}}</p>
-      <p>Precio: ${{this.price}}</p>
-    </div>
+    <li>{{this.title}} - ${{this.price}}</li>
   {{/each}}
-</div>
+</ul>

@@ -1,48 +1,47 @@
 // Filename: managers/product.manager.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
-import ProductModel from '../models/product.model.js';
+import { readFile, writeFile } from '../utils/fileHelper.js';
 
 class ProductManager {
+  constructor() {
+    this.file = 'productos.json';
+  }
+
   async getAll() {
-    try {
-      return await ProductModel.find({});
-    } catch (error) {
-      throw new Error('Error al obtener los productos: ' + error.message);
-    }
+    return await readFile(this.file);
   }
 
   async getById(id) {
-    try {
-      return await ProductModel.findById(id);
-    } catch (error) {
-      throw new Error('Error al obtener el producto por ID: ' + error.message);
-    }
+    const products = await this.getAll();
+    return products.find(p => p.id === parseInt(id));
   }
 
   async addProduct(productData) {
-    try {
-      const newProduct = new ProductModel(productData);
-      return await newProduct.save();
-    } catch (error) {
-      throw new Error('Error al agregar el producto: ' + error.message);
-    }
+    const products = await this.getAll();
+    const newId = products.length ? products[products.length - 1].id + 1 : 1;
+    const newProduct = { id: newId, ...productData };
+    products.push(newProduct);
+    await writeFile(this.file, products);
+    return newProduct;
   }
 
   async updateProduct(id, updateData) {
-    try {
-      return await ProductModel.findByIdAndUpdate(id, updateData, { new: true });
-    } catch (error) {
-      throw new Error('Error al actualizar el producto: ' + error.message);
-    }
+    const products = await this.getAll();
+    const index = products.findIndex(p => p.id === parseInt(id));
+    if (index === -1) throw new Error('Producto no encontrado');
+    products[index] = { ...products[index], ...updateData };
+    await writeFile(this.file, products);
+    return products[index];
   }
 
   async deleteProduct(id) {
-    try {
-      return await ProductModel.findByIdAndDelete(id);
-    } catch (error) {
-      throw new Error('Error al eliminar el producto: ' + error.message);
-    }
+    let products = await this.getAll();
+    const initialLength = products.length;
+    products = products.filter(p => p.id !== parseInt(id));
+    if (products.length === initialLength) throw new Error('Producto no encontrado');
+    await writeFile(this.file, products);
+    return true;
   }
 }
 

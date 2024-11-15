@@ -8,7 +8,7 @@ import { updateProductValidator } from '../middlewares/updateProduct.validator.j
 
 export const productRoutes = express.Router();
 
-// Obtener todos productos
+// Todos productos
 productRoutes.get('/', async (req, res) => {
   try {
     const products = await productManager.getAll();
@@ -19,7 +19,7 @@ productRoutes.get('/', async (req, res) => {
   }
 });
 
-// Obtener producto por ID
+// Obtener producto x ID
 productRoutes.get('/:id', async (req, res) => {
   try {
     const product = await productManager.getById(req.params.id);
@@ -40,7 +40,7 @@ productRoutes.post('/', productValidator, async (req, res) => {
   }
 });
 
-// Actualizar existente
+// Actualizar producto 
 productRoutes.put('/:id', updateProductValidator, async (req, res) => {
   try {
     const updatedProduct = await productManager.updateProduct(req.params.id, req.body);
@@ -54,9 +54,9 @@ productRoutes.put('/:id', updateProductValidator, async (req, res) => {
 // Eliminar producto
 productRoutes.delete('/:id', async (req, res) => {
   try {
-    const deletedProduct = await productManager.deleteProduct(req.params.id);
-    if (!deletedProduct) return res.status(404).json({ error: 'Producto no encontrado' });
-    res.json({ message: 'Producto eliminado', product: deletedProduct });
+    const deleted = await productManager.deleteProduct(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Producto no encontrado' });
+    res.json({ message: 'Producto eliminado' });
   } catch (error) {
     res.status(500).json({ error: 'Error al eliminar el producto: ' + error.message });
   }

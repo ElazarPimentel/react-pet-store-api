@@ -1,13 +1,12 @@
 // Filename: routes/carts.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
+// routes/carts.js
 import express from 'express';
 import { cartManager } from '../managers/cart.manager.js';
 export const cartRoutes = express.Router();
 
-
-
-// Crear nuevo carrito
+// Crear carrito
 cartRoutes.post('/', async (req, res) => {
   try {
     const newCart = await cartManager.createCart();
@@ -17,7 +16,7 @@ cartRoutes.post('/', async (req, res) => {
   }
 });
 
-// Obtener carrito por ID
+// Obtener carrito x ID
 cartRoutes.get('/:id', async (req, res) => {
   try {
     const cart = await cartManager.getById(req.params.id);
