@@ -1,14 +1,6 @@
 {{!-- views/products.handlebars 
 Alumno: Alessio (Elazar) Aguirre Pimentel --}}
 
-<h1>Productos</h1>
-<ul>
-  {{#each products}}
-    <li>{{this.title}} - ${{this.price}}</li>
-  {{/each}}
-</ul>
-
-
 <h1>Listado de Productos</h1>
 <div id="product-list">
   {{#each products}}
@@ -16,7 +8,7 @@ Alumno: Alessio (Elazar) Aguirre Pimentel --}}
       <h3>{{this.title}}</h3>
       <img src="{{this.thumbnail}}" alt="{{this.title}}" width="150" height="150" />
       <p>Precio: ${{this.price}}</p>
-      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+      <button onclick="addToCart('{{this.id}}')">Agregar al carrito</button>
     </div>
   {{/each}}
 </div>

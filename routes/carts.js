@@ -1,12 +1,11 @@
 // Filename: routes/carts.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
-// routes/carts.js
 import express from 'express';
 import { cartManager } from '../managers/cart.manager.js';
 export const cartRoutes = express.Router();
 
-// Crear carrito
+// Crear nuevo carrito
 cartRoutes.post('/', async (req, res) => {
   try {
     const newCart = await cartManager.createCart();

@@ -24,6 +24,6 @@ export const readFile = async (fileName) => {
 };
 
 export const writeFile = async (fileName, data) => {
-  const filePath = path.join(dataDir, fileName);
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8'); //No 16 
+  const filePath = path.join(dataDir, fileName); //Acá
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
 };

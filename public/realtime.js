@@ -1,7 +1,7 @@
 // Filename: public/realtime.js
 // Alumno: Alessio (Elazar) Pimentel
 
-const socket = io();
+const socket = io(); // Y acá
 
 socket.emit('getProducts');
 

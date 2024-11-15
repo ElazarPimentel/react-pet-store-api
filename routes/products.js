@@ -1,6 +1,7 @@
 // Filename: routes/products.js
 // Alumno: Alessio (Elazar) Aguirre Pimentel
 
+// routes/products.js
 import express from 'express';
 import { productManager } from '../managers/product.manager.js';
 import { productValidator } from '../middlewares/product.validator.js';
@@ -19,7 +20,7 @@ productRoutes.get('/', async (req, res) => {
   }
 });
 
-// Obtener producto x ID
+// Producto x ID
 productRoutes.get('/:id', async (req, res) => {
   try {
     const product = await productManager.getById(req.params.id);
